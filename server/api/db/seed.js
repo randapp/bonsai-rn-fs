@@ -1,6 +1,5 @@
 const { merchants } = require('./mockMerchantData');
-const Merchant = require('../models/MerchantModel');
-const Product = require('../models/productModel');
+const { merchant: Merchant, product: Product } = require('../graphql/models');
 
 // eslint-disable-next-line no-unused-vars
 function handleError(err) {}

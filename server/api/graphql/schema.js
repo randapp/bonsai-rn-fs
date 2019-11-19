@@ -1,43 +1,25 @@
 const { gql } = require('apollo-server-express');
+const ProductSchema = require('./product/productSchema');
+const MerchantSchema = require('./merchant/merchantSchema');
+const UserSchema = require('./user/userSchema');
+const SearchSchema = require('./search/searchSchema');
 
-const typeDefs = gql`
-  type Merchant {
-    index: Int
-    guid: String
-    logo: String
-    dateCreated: String
-    publishedState: Boolean
-    brands: [String]
-    name: String
-    products: [Product]
-    commissionFee: String
-    contactEmail: String
-    phone: String
-    address: String
-    publishedDate: String
-    publishedBy: User
-    companyDescription: String
-  }
-  type Product {
-    belongsToBrand: Int
-    id: String
-    name: String
-    price: Float
+const BaseSchema = gql`
+  type APIInfo {
     description: String
-    color: String
-    size: String
-    quantity: Int
-    image: String
+    version: String
   }
-  type User {
-    userId: String
+  input APIInfoInput {
+    description: String
+    version: String
   }
+
   type Query {
-    products: [Product!]
+    apiInfo: APIInfo
   }
   type Mutation {
-    editMerchant(publishedState: Boolean!): Merchant
+    UpdateAPIInfo(input: APIInfoInput!): APIInfo
   }
 `;
 
-module.exports = typeDefs;
+module.exports = [SearchSchema, BaseSchema, ProductSchema, MerchantSchema, UserSchema];

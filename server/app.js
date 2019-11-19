@@ -2,10 +2,9 @@ const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
 const Mongoose = require('mongoose');
 const seed = require('./api/db/seed');
-const typeDefs = require('./api/graphql/schema');
-const resolvers = require('./api/graphql/resolvers');
+const graphQLSpecs = require('./api/graphql');
 
-const server = new ApolloServer({ typeDefs, resolvers });
+const server = new ApolloServer(graphQLSpecs);
 
 const app = express();
 const PORT = 8080;
