@@ -1,5 +1,6 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+
+const { Schema } = mongoose;
 
 const product = new Schema({
   belongsToBrand: Number,
@@ -14,4 +15,4 @@ const product = new Schema({
   merchant: { type: Schema.Types.ObjectId, ref: 'Merchant' },
 });
 
-module.exports = mongoose.model("Product", product);
+module.exports = mongoose.model('Product', product);

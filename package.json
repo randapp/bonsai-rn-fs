@@ -1,4 +1,6 @@
 {
+  "name": "bonsai",
+  "version": "0.0.0",
   "devDependencies": {
     "eslint": "6.1.0",
     "eslint-config-airbnb": "18.0.1",

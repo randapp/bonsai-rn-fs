@@ -1,6 +1,6 @@
 const { merchants } = require('./mockMerchantData');
-const Merchant = require('./MerchantModel');
-const Product = require('./productModel');
+const Merchant = require('../models/MerchantModel');
+const Product = require('../models/productModel');
 
 // eslint-disable-next-line no-unused-vars
 function handleError(err) {}
@@ -23,7 +23,7 @@ const seed = async () => {
           color,
           size,
           quantity,
-          image
+          image,
         } = product;
         const ProductObject = new Product({
           belongsToBrand,
@@ -35,7 +35,7 @@ const seed = async () => {
           size,
           quantity,
           image,
-          merchant: MerchantObject._id
+          merchant: MerchantObject._id,
         });
         ProductObject.save(err => {
           if (err) return handleError(err);

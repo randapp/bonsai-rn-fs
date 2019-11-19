@@ -1,9 +1,9 @@
 import React from 'react';
-import {SafeAreaView, FlatList, StyleSheet, Text, Image} from 'react-native';
-import {Button} from 'react-native';
+import {SafeAreaView, FlatList, StyleSheet, Image} from 'react-native';
 import {useQuery} from '@apollo/react-hooks';
 import gql from 'graphql-tag';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
+import {Button as NButton, Text} from 'native-base';
 
 const Container = styled.View`
   width: 90%;
@@ -31,6 +31,13 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     alignSelf: 'flex-start',
   },
+  image: {width: 170, height: 250},
+  butttonBuy: {
+    margin: 10,
+    backgroundColor: 'green',
+    flex: 1,
+    justifyContent: 'center',
+  },
 });
 
 const GET_PRODUCTS = gql`
@@ -47,19 +54,28 @@ const GET_PRODUCTS = gql`
   }
 `;
 
+const Button = styled(NButton)`
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2;
+  margin-left: 10;
+`;
+
 const renderItem = ({item}) => {
   return (
     <Container>
-      <Image
-        style={{width: 170, height: 250}}
-        source={{uri: item.image}}></Image>
+      <Image style={styles.image} source={{uri: item.image}} />
       <DetailsContainer>
         <Text style={styles.title}>{item && item.name}</Text>
         <Text style={styles.text}>Size: {item && item.size}</Text>
         <Text style={styles.text}>Color: {item && item.color}</Text>
         <Text style={styles.text}>Price: {item && item.price}</Text>
         <Text style={styles.text}>Description: {item && item.description}</Text>
-        <Button title="Buy" type="solid" style={{margin: 5}} />
+        <Button>
+          <Text style={{color: 'black', fontWeight: 'bold'}}>Add to cart</Text>
+        </Button>
       </DetailsContainer>
     </Container>
   );
@@ -68,10 +84,13 @@ const renderItem = ({item}) => {
 const keyExtractor = item => item.id;
 
 const ProductsList = () => {
-  const { loading, error, data } = useQuery(GET_PRODUCTS);
-  const { products } = data || {}
-  if (loading) return <Text> Loading... </Text>;
-    if (data && data.products) return (
+  const {loading, error, data} = useQuery(GET_PRODUCTS);
+  const {products} = data || {};
+  if (loading) {
+    return <Text> Loading... </Text>;
+  }
+  if (data && data.products) {
+    return (
       <SafeAreaView style={styles.container}>
         <FlatList
           data={products}
@@ -80,7 +99,9 @@ const ProductsList = () => {
         />
       </SafeAreaView>
     );
-  else console.error(error);
+  } else {
+    console.error(error);
+  }
 };
 
 export default ProductsList;
