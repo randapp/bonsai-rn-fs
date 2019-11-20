@@ -21,6 +21,9 @@ const merchant = new Schema({
   companyDescription: String,
 });
 
-const Model = mongoose.model('Merchant', merchant);
+merchant.index({
+  name: 'text',
+  brands: 'text',
+});
 
-module.exports = Model;
+module.exports = mongoose.model('Merchant', merchant);

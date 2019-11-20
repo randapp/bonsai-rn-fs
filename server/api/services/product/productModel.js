@@ -15,4 +15,9 @@ const product = new Schema({
   merchant: { type: Schema.Types.ObjectId, ref: 'Merchant' },
 });
 
+product.index({
+  name: 'text',
+  description: 'text',
+});
+
 module.exports = mongoose.model('Product', product);

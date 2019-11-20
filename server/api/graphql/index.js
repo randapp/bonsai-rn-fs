@@ -1,11 +1,11 @@
 const typeDefs = require('./schema');
 const resolvers = require('./resolvers');
-const models = require('./models');
+const services = require('../services');
 
 module.exports = {
   typeDefs,
   resolvers,
   context: {
-    models,
+    services,
   },
 };

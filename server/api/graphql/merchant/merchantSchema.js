@@ -9,7 +9,7 @@ const typeDefs = gql`
     publishedState: Boolean
     brands: [String]
     name: String
-    products: [Product]
+    products(limit: Int): [Product]
     commissionFee: String
     contactEmail: String
     phone: String
@@ -21,6 +21,7 @@ const typeDefs = gql`
 
   extend type Query {
     merchant(id: Int): Merchant!
+    merchants: [Merchant]!
   }
   extend type Mutation {
     editMerchant(publishedState: Boolean!): Merchant

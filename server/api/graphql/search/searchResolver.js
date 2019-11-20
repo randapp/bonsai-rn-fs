@@ -1,16 +1,7 @@
-const search = async (_, args, ctx) => {
-  console.log(args);
-  const query = { $text: { $search: args.query } };
-
-  const results = await Promise.all([
-    ctx.models.product.find(query).exec(),
-    ctx.models.merchant.find(query).exec(),
-  ]);
-  return [].concat(...results);
-};
-
 const Query = {
-  search,
+  async search(_, args, { services }) {
+    return services.search(args.query);
+  },
 };
 const Resolvers = {
   SearchResult: {

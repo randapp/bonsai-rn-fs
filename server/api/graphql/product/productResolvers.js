@@ -1,13 +1,17 @@
-const Product = require('./productModel');
-
-const Query = {
-  products: async () => Product.find({}).limit(10),
-};
 const Mutation = {};
-const Resolvers = {};
 
 module.exports = {
-  Query,
+  Query: {
+    async products(_, args, { services }) {
+      return services.product.getProducts(args.limit);
+    },
+  },
   Mutation,
-  Resolvers,
+  Resolvers: {
+    Product: {
+      async belongsToBrand(product, args, { services }) {
+        return services.product.getProductBrand(product);
+      },
+    },
+  },
 };

@@ -1,8 +1,10 @@
 const { merchants } = require('./mockMerchantData');
-const { merchant: Merchant, product: Product } = require('../graphql/models');
+const { merchant: Merchant, product: Product } = require('../services/models');
 
 // eslint-disable-next-line no-unused-vars
-function handleError(err) {}
+function handleError(err) {
+  console.log(err);
+}
 
 const seed = async () => {
   if ((await Merchant.countDocuments()) === 0 && (await Product.countDocuments()) === 0) {
