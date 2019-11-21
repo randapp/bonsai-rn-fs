@@ -10,7 +10,6 @@ module.exports = {
   Mutation: {
     async newOrder(_, args, { services }) {
       const result = await services.order.addOrder(args.input);
-      console.log(result);
       return result;
     },
   },
@@ -23,7 +22,8 @@ module.exports = {
         return order._id;
       },
       async items(order, args, { services }) {
-        return services.order.getOrderDetails(order._id);
+        const items = await services.order.getOrderDetails(order._id);
+        return items;
       },
     },
   },

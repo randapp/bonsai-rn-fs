@@ -13,6 +13,10 @@ const product = new Schema({
   quantity: Number,
   image: String,
   merchant: { type: Schema.Types.ObjectId, ref: 'Merchant' },
+  popularity: {
+    type: Schema.Types.Number,
+    default: 0,
+  },
 });
 
 product.index({

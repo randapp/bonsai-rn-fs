@@ -12,13 +12,7 @@ const Order = new Schema({
   ],
   user: { type: Schema.Types.ObjectId, ref: 'User' },
   orderedOn: Schema.Types.Date,
-});
-
-// eslint-disable-next-line func-names
-Order.virtual('total').get(function() {
-  return this.items.reduce((total, item) => {
-    return total + item.quantity * item.priceAtOrderDate;
-  }, 0);
+  total: Schema.Types.Number,
 });
 
 module.exports = mongoose.model('Order', Order);

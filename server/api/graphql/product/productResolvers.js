@@ -12,6 +12,9 @@ module.exports = {
       async belongsToBrand(product, args, { services }) {
         return services.product.getProductBrand(product);
       },
+      likedBy(product) {
+        return product.popularity;
+      },
     },
   },
 };

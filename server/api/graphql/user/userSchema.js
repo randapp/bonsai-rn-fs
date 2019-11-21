@@ -11,8 +11,10 @@ const typeDefs = gql`
     email: String
     name: String
     address: String
-    orders: [Order]!
+    orders: [Order]
+    likes: [String]
   }
+
   extend type Query {
     users: [User]!
     user(userId: String): User

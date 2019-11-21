@@ -5,6 +5,7 @@ const typeDefs = gql`
     product: String!
     quantity: Int!
     name: String
+    priceAtOrderDate: Float
   }
   input OrderItemInput {
     product: String!

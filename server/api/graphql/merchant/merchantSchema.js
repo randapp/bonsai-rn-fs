@@ -20,8 +20,8 @@ const typeDefs = gql`
   }
 
   extend type Query {
-    merchant(id: Int): Merchant!
-    merchants: [Merchant]!
+    merchant(id: String): Merchant!
+    merchants(limit: Int): [Merchant]!
   }
   extend type Mutation {
     editMerchant(publishedState: Boolean!): Merchant

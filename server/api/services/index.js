@@ -16,10 +16,19 @@ const order = require('./order/orderServiceFactory')({
   ...modelDependencies,
 });
 
+const analytics = require('./analyticsServiceFactory')({
+  UserService: user,
+  ProductService: product,
+});
+
 module.exports = {
   product,
   merchant,
   search,
   user,
   order,
+  analytics: {
+    like: analytics.updateFavorites(1),
+    unlike: analytics.updateFavorites(-1),
+  },
 };

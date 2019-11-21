@@ -1,3 +1,12 @@
+const Decimal = require('decimal.js');
+
+const total = items =>
+  items
+    .reduce((acc, item) => {
+      return acc.plus(new Decimal(item.priceAtOrderDate).times(item.quantity));
+    }, new Decimal(0))
+    .toFixed(2);
+
 module.exports = ({ UserService, OrderModel, ProductService }) => {
   const getUserOrders = async userId => {
     const orderRefs = await UserService.getOrderRefs(userId);
@@ -5,11 +14,13 @@ module.exports = ({ UserService, OrderModel, ProductService }) => {
   };
   const addOrder = async order => {
     const { userId: user, ...rest } = order;
-    const newOrder = new OrderModel({ ...rest, user });
-    console.log(newOrder);
+    const items = await ProductService.price(rest.items);
+    const newOrder = new OrderModel({ ...rest, user, items, total: total(items) });
     const result = await newOrder.save();
-    console.log(JSON.stringify(result, undefined, 2));
-    await UserService.addOrder(user, result._id);
+    await Promise.all([
+      UserService.addOrder(user, result._id),
+      ProductService.updateStocks(order.items),
+    ]);
     return result;
   };
 
@@ -18,14 +29,24 @@ module.exports = ({ UserService, OrderModel, ProductService }) => {
     return result.user;
   };
   const getOrderDetails = async orderId => {
-    console.log(orderId);
     const result = await OrderModel.findById(orderId);
-    return Promise.all(result.items.map(item => ProductService.getProduct(item.product)));
+    return Promise.all(
+      result.items.map(async item => {
+        const { name } = await ProductService.getProduct(item.product);
+        return {
+          name,
+          quantity: item.quantity,
+          product: item.product,
+          priceAtOrderDate: item.priceAtOrderDate,
+        };
+      }),
+    );
   };
   return {
     getUserOrders,
     addOrder,
     getOrderOwner,
     getOrderDetails,
+    total,
   };
 };

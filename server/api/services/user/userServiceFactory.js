@@ -5,7 +5,6 @@ module.exports = ({ UserModel }) => {
     return result;
   };
   const getUser = async userId => {
-    console.log(userId);
     const result = await UserModel.findById(userId);
     return result;
   };
@@ -17,16 +16,34 @@ module.exports = ({ UserModel }) => {
     return user.orders;
   };
   const addOrder = async (userId, orderId) => {
-    const user = await UserModel.findById(userId);
+    const user = await getUser(userId);
     user.orders.push(orderId);
     await user.save();
     return user;
   };
+
+  const likeProduct = async (userId, productId) => {
+    const user = await getUser(userId);
+    user.likes.push(productId);
+    await user.save();
+    console.log(user.likes);
+    return user;
+  };
+
+  const unlikeProduct = async (userId, productId) => {
+    const user = await getUser(userId);
+    user.likes = user.likes.filter(p => p !== productId);
+    await user.save();
+    return user;
+  };
+
   return {
     addUser,
     getUser,
     getUsers,
     getOrderRefs,
     addOrder,
+    likeProduct,
+    unlikeProduct,
   };
 };

@@ -11,6 +11,7 @@ const typeDefs = gql`
     size: String
     quantity: Int
     image: String
+    likedBy: Int
   }
   extend type Query {
     products(limit: Int): [Product]!

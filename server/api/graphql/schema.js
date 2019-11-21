@@ -10,16 +10,17 @@ const BaseSchema = gql`
     description: String
     version: String
   }
-  input APIInfoInput {
-    description: String
-    version: String
-  }
 
   type Query {
     apiInfo: APIInfo
   }
+  type Like {
+    product: String
+    total: Int
+  }
   type Mutation {
-    UpdateAPIInfo(input: APIInfoInput!): APIInfo
+    like(userId: String!, productId: String!): Like
+    unlike(userId: String!, productId: String!): Like
   }
 `;
 
