@@ -6,7 +6,7 @@ const apolloClient = new client({
   uri: Platform.select({
     // android: 'http://10.0.2.2.xip.io:8080/graphql',
     // android: `http://${SERVER_ADDRESS}:${PORT}/graphql`,
-    android: 'http://localhost:8080/graphql',
+    android: 'http://localhost:8080/graphql', //run on an Android device connected through usb
     ios: 'http://localhost:8080/graphql',
   }),
 });

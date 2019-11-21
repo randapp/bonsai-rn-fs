@@ -13,11 +13,14 @@ import {
   Icon,
   Left,
 } from 'native-base';
+import Login from './login';
 
 const Layout = ({children}) => (
   <Container>
     <Header searchBar rounded>
-      <Left />
+      <Left>
+        <Login />
+      </Left>
       <Item>
         <Icon name="cart" />
         <Input placeholder="Search" />
