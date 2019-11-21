@@ -2,30 +2,29 @@ const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
   type OrderItem {
-    product: Int!
+    product: String!
     quantity: Int!
     name: String
   }
   input OrderItemInput {
-    product: Int!
+    product: String!
     quantity: Int!
   }
   type Order {
+    orderId: String!
     items: [OrderItem!]
     user: User!
-    id: String!
-    total: Float!
-    orderedOn: String!
+    total: Float
+    orderedOn: String
   }
   input OrderInput {
     items: [OrderItemInput!]
-    user: UserInput!
-    id: String
+    userId: String!
   }
 
   extend type Query {
-    orders(user: UserInput!): [Order]!
-    order(id: Int): Order!
+    userOrders(userId: String!): [Order]!
+    orderDetails(orderId: String!): Order!
   }
   extend type Mutation {
     newOrder(input: OrderInput): Order

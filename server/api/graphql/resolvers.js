@@ -1,16 +1,22 @@
 const Product = require('./product/productResolvers');
 const Search = require('./search/searchResolver');
 const Merchant = require('./merchant/merchantResolvers');
+const User = require('./user/userResolvers');
+const Order = require('./order/orderResolvers');
 
 const resolvers = {
-  Query: { ...Product.Query, ...Search.Query, ...Merchant.Query },
+  Query: { ...Product.Query, ...Search.Query, ...Merchant.Query, ...User.Query, ...Order.Query },
   Mutation: {
     ...Product.Mutation,
     ...Merchant.Mutation,
+    ...User.Mutation,
+    ...Order.Mutation,
   },
   ...Product.Resolvers,
   ...Search.Resolvers,
   ...Merchant.Resolvers,
+  ...User.Resolvers,
+  ...Order.Resolvers,
 };
 
 module.exports = resolvers;

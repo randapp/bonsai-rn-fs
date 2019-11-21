@@ -13,7 +13,7 @@ const typeDefs = gql`
     image: String
   }
   extend type Query {
-    products: [Product!]
+    products(limit: Int): [Product]!
   }
 `;
 

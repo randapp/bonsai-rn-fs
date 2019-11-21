@@ -1,14 +1,25 @@
 const models = require('./models');
-const productServiceFactory = require('./product/productServiceFactory');
-const merchantServiceFactory = require('./merchant/merchantServiceFactory');
-const searchServiceFactory = require('./searchServiceFactory');
 
 const modelDependencies = {
   MerchantModel: models.merchant,
   ProductModel: models.product,
+  UserModel: models.user,
+  OrderModel: models.order,
 };
+const product = require('./product/productServiceFactory')(modelDependencies);
+const merchant = require('./merchant/merchantServiceFactory')(modelDependencies);
+const search = require('./searchServiceFactory')(modelDependencies);
+const user = require('./user/userServiceFactory')(modelDependencies);
+const order = require('./order/orderServiceFactory')({
+  UserService: user,
+  ProductService: product,
+  ...modelDependencies,
+});
+
 module.exports = {
-  product: productServiceFactory(modelDependencies),
-  merchant: merchantServiceFactory(modelDependencies),
-  search: searchServiceFactory(modelDependencies),
+  product,
+  merchant,
+  search,
+  user,
+  order,
 };

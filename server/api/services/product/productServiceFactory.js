@@ -3,13 +3,16 @@ module.exports = ({ ProductModel, MerchantModel }) => {
     return ProductModel.find({}).limit(limit);
   };
   const getProductBrand = async product => {
-    console.log(product.merchant);
     const merchant = await MerchantModel.findById(product.merchant).exec();
     console.log(merchant);
     return merchant.brands[product.belongsToBrand];
   };
+  const getProduct = async id => {
+    return ProductModel.findOne({ id });
+  };
   return {
     getProducts,
     getProductBrand,
+    getProduct,
   };
 };
