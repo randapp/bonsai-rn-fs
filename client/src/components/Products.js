@@ -3,11 +3,12 @@ import {SafeAreaView, FlatList, StyleSheet, Image} from 'react-native';
 import {useQuery} from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import styled from 'styled-components/native';
-import {Button as NButton, Text} from 'native-base';
+import {Text} from 'native-base';
+import Product from './product';
 
 const Container = styled.View`
   width: 90%;
-  background-color: #f6f6f6;
+  background-color: transparent;
   padding: 2px;
   margin: 20px;
   height: 250px;
@@ -17,8 +18,10 @@ const Container = styled.View`
 
 const DetailsContainer = styled.View`
   flex: 1;
-  flex-direction: column;
-  justify-content: space-between;
+  flex-direction: row;
+  justify-content: center;
+  background: transparent;
+  margin-bottom: 15;
 `;
 const styles = StyleSheet.create({
   title: {
@@ -54,28 +57,11 @@ const GET_PRODUCTS = gql`
   }
 `;
 
-const Button = styled(NButton)`
-  background-color: transparent;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 2;
-  margin-left: 10;
-`;
-
 const renderItem = ({item}) => {
   return (
     <Container>
-      <Image style={styles.image} source={{uri: item.image}} />
       <DetailsContainer>
-        <Text style={styles.title}>{item && item.name}</Text>
-        <Text style={styles.text}>Size: {item && item.size}</Text>
-        <Text style={styles.text}>Color: {item && item.color}</Text>
-        <Text style={styles.text}>Price: {item && item.price}</Text>
-        <Text style={styles.text}>Description: {item && item.description}</Text>
-        <Button>
-          <Text style={{color: 'black', fontWeight: 'bold'}}>Add to cart</Text>
-        </Button>
+        <Product item={item} />
       </DetailsContainer>
     </Container>
   );
@@ -93,6 +79,10 @@ const ProductsList = () => {
     return (
       <SafeAreaView style={styles.container}>
         <FlatList
+          style={{
+            padding: 10,
+          }}
+          numColumns={2}
           data={products}
           renderItem={renderItem}
           keyExtractor={keyExtractor}
